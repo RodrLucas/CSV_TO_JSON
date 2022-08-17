@@ -1,0 +1,27 @@
+{
+  "name": "CSV2JSON",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "types": "module",
+  "dependencies": {
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RodrLucas/CSV_TO_JSON.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RodrLucas/CSV_TO_JSON/issues"
+  },
+  "homepage": "https://github.com/RodrLucas/CSV_TO_JSON#readme"
+}
