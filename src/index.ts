@@ -12,7 +12,6 @@ fs.readdir(CSV_FOLDER_PATH, {encoding: 'utf-8', withFileTypes: true} ,(err, file
   
   //Create a directory folder
   //MUDAR LÓGICA -> CONVERTER OS ARQUIVOS SEM PRECISAR APAGAR A PASTA CONVERTED_FILES
-  //TROCAR IF POR OBJECT LITERALS
     const newFolderPath = path.join(__dirname, 'CONVERTED_FILES')
     const getErrFolderPath = (errFolderPath: any) => {
         if(errFolderPath) return console.error(errFolderPath)
