@@ -1,5 +1,6 @@
 const path = require('path')
 import fs from 'fs'
+import { writeFile } from './utils/writeFile'
 
 //Getting folder path
 const CSV_FOLDER_PATH = path.join(__dirname, 'CSV_FILES')
@@ -7,13 +8,14 @@ const CSV_FOLDER_PATH = path.join(__dirname, 'CSV_FILES')
 //Using readdir to send folderPath and a call back function will return files
 fs.readdir(CSV_FOLDER_PATH, {encoding: 'utf-8', withFileTypes: true} ,(err, files) => {
   if(err) console.log(err)
+  
   //Create a directory folder
-  const CONVERTED_FILES = path.join(__dirname, 'CONVERTED_FILES')
+  path.join(__dirname, 'CONVERTED_FILES')
   //MUDAR LÓGICA -> CONVERTER OS ARQUIVOS SEM PRECISAR APAGAR A PASTA CONVERTED_FILES
   //TROCAR IF POR OBJECT LITERALS
   fs.mkdir(path.join(__dirname, 'CONVERTED_FILES'), (err) => {
     if(err) return console.error(err)
-  })     
+  })
 
   //for each file, read with fs.readFile function
   files.forEach( ({name}) => {
@@ -44,10 +46,13 @@ fs.readdir(CSV_FOLDER_PATH, {encoding: 'utf-8', withFileTypes: true} ,(err, file
         let fileNameJson = name.replace('.csv', '.json')
 
         //Create a file in folder
-        fs.writeFile(`${__dirname}/CONVERTED_FILES/${fileNameJson}`, JSON.stringify(result, null, 4), (err) => {
-          if(err) console.error(err) 
-          else console.log('File Written Successfully') 
-        })
+        const writeFilePath = `${__dirname}/CONVERTED_FILES/${fileNameJson}`
+        const dataFile = JSON.stringify(result, null, 4)
+        const getErr = (err: any) => {
+            if(err) console.log(err)
+            else console.log('File Written Successfully') 
+        }
+        writeFile({writeFilePath, dataFile, getErr })
     })
   })
 })
