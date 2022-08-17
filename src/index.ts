@@ -1,6 +1,7 @@
 const path = require('path')
 import fs from 'fs'
 import { writeFile } from './utils/writeFile'
+import { createDirFolder } from './utils/createDirFolder'
 
 //Getting folder path
 const CSV_FOLDER_PATH = path.join(__dirname, 'CSV_FILES')
@@ -10,12 +11,13 @@ fs.readdir(CSV_FOLDER_PATH, {encoding: 'utf-8', withFileTypes: true} ,(err, file
   if(err) console.log(err)
   
   //Create a directory folder
-  path.join(__dirname, 'CONVERTED_FILES')
   //MUDAR LÓGICA -> CONVERTER OS ARQUIVOS SEM PRECISAR APAGAR A PASTA CONVERTED_FILES
   //TROCAR IF POR OBJECT LITERALS
-  fs.mkdir(path.join(__dirname, 'CONVERTED_FILES'), (err) => {
-    if(err) return console.error(err)
-  })
+    const newFolderPath = path.join(__dirname, 'CONVERTED_FILES')
+    const getErrFolderPath = (errFolderPath: any) => {
+        if(errFolderPath) return console.error(errFolderPath)
+    }
+    createDirFolder({newFolderPath, getErrFolderPath})
 
   //for each file, read with fs.readFile function
   files.forEach( ({name}) => {
@@ -28,7 +30,6 @@ fs.readdir(CSV_FOLDER_PATH, {encoding: 'utf-8', withFileTypes: true} ,(err, file
 
       //I had difficulty on this logic
       //for each current line split ','
-
       //ALTERAR FOR POR REDUCE
         for (let i = 1; i < itemsContent.length; i++) {
           let obj: any = {}

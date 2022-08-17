@@ -3,14 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeFile = void 0;
+exports.createDirFolder = void 0;
+const path = require('path');
 const fs_1 = __importDefault(require("fs"));
-function writeFile({ writeFilePath, dataFile, getErr }) {
-    fs_1.default.writeFile(writeFilePath, dataFile, getErr);
+function createDirFolder({ newFolderPath, getErrFolderPath }) {
+    fs_1.default.mkdir(newFolderPath, getErrFolderPath);
     return {
-        writeFilePath,
-        dataFile,
-        getErr
+        newFolderPath,
+        getErrFolderPath
     };
 }
-exports.writeFile = writeFile;
+exports.createDirFolder = createDirFolder;
