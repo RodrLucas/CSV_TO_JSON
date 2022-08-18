@@ -2,16 +2,16 @@ const path = require('path')
 import fs from 'fs'
 
 type CreateDirFolderProps = {
-    newFolderPath: fs.PathLike,
+    CONVERTED_FILES_PATH: fs.PathLike,
     getErrFolderPath: fs.NoParamCallback
 }
 
-export function createDirFolder({newFolderPath, getErrFolderPath}: CreateDirFolderProps ){
+export function createDirFolder({CONVERTED_FILES_PATH, getErrFolderPath}: CreateDirFolderProps ){
 
-    fs.mkdir(newFolderPath, getErrFolderPath)
+    fs.mkdir(CONVERTED_FILES_PATH, getErrFolderPath)
 
     return {
-        newFolderPath,
+        CONVERTED_FILES_PATH,
         getErrFolderPath
     }
 }

@@ -5,8 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = require('path');
 const fs_1 = __importDefault(require("fs"));
-const writeFile_1 = require("./utils/writeFile");
 const createDirFolder_1 = require("./utils/createDirFolder");
+const readFile_1 = require("./utils/readFile");
+const writeFile_1 = require("./utils/writeFile");
 //Getting folder path
 const CSV_FOLDER_PATH = path.join(__dirname, 'CSV_FILES');
 //Using readdir to send folderPath and a call back function will return files
@@ -15,7 +16,6 @@ fs_1.default.readdir(CSV_FOLDER_PATH, { encoding: 'utf-8', withFileTypes: true }
         console.log(err);
     //Create a directory folder
     //MUDAR LÓGICA -> CONVERTER OS ARQUIVOS SEM PRECISAR APAGAR A PASTA CONVERTED_FILES
-    //TROCAR IF POR OBJECT LITERALS
     const newFolderPath = path.join(__dirname, 'CONVERTED_FILES');
     const getErrFolderPath = (errFolderPath) => {
         if (errFolderPath)
@@ -24,7 +24,9 @@ fs_1.default.readdir(CSV_FOLDER_PATH, { encoding: 'utf-8', withFileTypes: true }
     (0, createDirFolder_1.createDirFolder)({ newFolderPath, getErrFolderPath });
     //for each file, read with fs.readFile function
     files.forEach(({ name }) => {
-        fs_1.default.readFile(`${CSV_FOLDER_PATH + '/' + name}`, 'utf-8', (err, data) => {
+        const readFilePath = `${CSV_FOLDER_PATH + '/' + name}`;
+        const readFileOptions = 'utf-8';
+        const readFileCallBack = (err, data) => {
             if (err)
                 return console.error(err);
             let itemsContent = data.split('\n');
@@ -55,6 +57,7 @@ fs_1.default.readdir(CSV_FOLDER_PATH, { encoding: 'utf-8', withFileTypes: true }
                     console.log('File Written Successfully');
             };
             (0, writeFile_1.writeFile)({ writeFilePath, dataFile, getErr });
-        });
+        };
+        (0, readFile_1.readFile)({ readFilePath, readFileOptions, readFileCallBack });
     });
 });
