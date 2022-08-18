@@ -1,20 +1,21 @@
 const path = require('path')
 import fs from 'fs'
+import { readCsvDir } from './utils/readCsvDIr'
 import { createDirFolder } from './utils/createDirFolder'
 import { readFile } from './utils/readFile'
 import { writeFile } from './utils/writeFile'
 
-const CSV_FOLDER_PATH = path.join(__dirname, 'CSV_FILES')
+ //MELHORIA -> CONVERTER OS ARQUIVOS SEM PRECISAR APAGAR A PASTA CONVERTED_FILES
+ const CONVERTED_FILES_PATH = path.join(__dirname, 'CONVERTED_FILES')
+ const getErrFolderPath = (errFolderPath: any) => {
+     if(errFolderPath) return console.error(errFolderPath)
+ }
+ createDirFolder({CONVERTED_FILES_PATH, getErrFolderPath})
 
-fs.readdir(CSV_FOLDER_PATH, {encoding: 'utf-8', withFileTypes: true} ,(err, files) => {
+const CSV_FOLDER_PATH = path.join(__dirname, 'CSV_FILES')
+const readCsvDirOptions = {encoding: 'utf-8', withFileTypes: true}
+const readCsvDirCallBack = (err: any, files: fs.Dirent[]) => {
   if(err) console.log(err)
-  
-    //MUDAR LÓGICA -> CONVERTER OS ARQUIVOS SEM PRECISAR APAGAR A PASTA CONVERTED_FILES
-    const CONVERTED_FILES_PATH = path.join(__dirname, 'CONVERTED_FILES')
-    const getErrFolderPath = (errFolderPath: any) => {
-        if(errFolderPath) return console.error(errFolderPath)
-    }
-    createDirFolder({CONVERTED_FILES_PATH, getErrFolderPath})
 
   files.forEach( ({name}) => {
         const readFilePath = `${CSV_FOLDER_PATH + '/' + name}`
@@ -51,4 +52,6 @@ fs.readdir(CSV_FOLDER_PATH, {encoding: 'utf-8', withFileTypes: true} ,(err, file
 
         readFile({readFilePath, readFileOptions, readFileCallBack})
   })
-})
+}
+
+readCsvDir({CSV_FOLDER_PATH, readCsvDirOptions, readCsvDirCallBack})
