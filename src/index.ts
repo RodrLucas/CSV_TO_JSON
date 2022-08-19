@@ -1,13 +1,13 @@
 const path = require("path");
 import fs from "fs";
-import { readCsvDir } from "./utils/readCsvDIr";
+import { readCsvDir } from "./utils/readCsvDir";
 import { createDirFolder } from "./utils/createDirFolder";
 import { readFile } from "./utils/readFile";
 import { writeFile } from "./utils/writeFile";
 
 //MELHORIA -> CONVERTER OS ARQUIVOS SEM PRECISAR APAGAR A PASTA CONVERTED_FILES
 const CONVERTED_FILES_PATH = path.join(__dirname, "CONVERTED_FILES");
-const getErrFolderPath = (errFolderPath: any) => {
+const getErrFolderPath = (errFolderPath: NodeJS.ErrnoException | null) => {
   if (errFolderPath) return console.error(errFolderPath);
 };
 createDirFolder({ CONVERTED_FILES_PATH, getErrFolderPath });

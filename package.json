@@ -12,7 +12,7 @@
     "@types/node": "^18.7.6"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "ts-node-dev --watch --respawn --exit-child --transpile-only  src/index.ts"
   },
   "repository": {
