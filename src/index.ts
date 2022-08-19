@@ -14,14 +14,15 @@ createDirFolder({ CONVERTED_FILES_PATH, getErrFolderPath });
 
 const CSV_FOLDER_PATH = path.join(__dirname, "CSV_FILES");
 const readCsvDirOptions = { encoding: "utf-8", withFileTypes: true };
-const readCsvDirCallBack = (err: any, files: fs.Dirent[]) => {
-  if (err) console.log(err);
+const readCsvDirCallBack = (err: NodeJS.ErrnoException | null, files: fs.Dirent[]) => {
+  if (err) console.log(err.message);
+  console.log('files', files)
 
   files.forEach(({ name }) => {
     const readFilePath = `${CSV_FOLDER_PATH + "/" + name}`;
     const readFileOptions = "utf-8";
-    const readFileCallBack = (err: any, data: string) => {
-      if (err) return console.error(err);
+    const readFileCallBack = (err: NodeJS.ErrnoException | null, data: string) => {
+      if (err) return console.error(err.message);
 
       let itemsContent = data.split("\n");
       let header = itemsContent[0].split(",");
@@ -31,6 +32,7 @@ const readCsvDirCallBack = (err: any, files: fs.Dirent[]) => {
       //ALTERAR FOR POR REDUCE
       for (let i = 1; i < itemsContent.length; i++) {
         let obj: any = {};
+       
         let currentLine = itemsContent[i].split(",");
 
         //for each line add a header value to obj KEY and a current itemsContent to obj VALUE
@@ -39,12 +41,13 @@ const readCsvDirCallBack = (err: any, files: fs.Dirent[]) => {
         }
         result.push(obj);
       }
+
       let changeFileExtention = name.replace(".csv", ".json");
 
       const writeFilePath = `${__dirname}/CONVERTED_FILES/${changeFileExtention}`;
       const dataFile = JSON.stringify(result, null, 4);
-      const getErr = (err: any) => {
-        if (err) console.log(err);
+      const getErr = (err: NodeJS.ErrnoException | null) => {
+        if (err) console.log(err.message);
         else console.log("File Written Successfully");
       };
       writeFile({ writeFilePath, dataFile, getErr });
@@ -53,5 +56,4 @@ const readCsvDirCallBack = (err: any, files: fs.Dirent[]) => {
     readFile({ readFilePath, readFileOptions, readFileCallBack });
   });
 };
-
 readCsvDir({ CSV_FOLDER_PATH, readCsvDirOptions, readCsvDirCallBack });
