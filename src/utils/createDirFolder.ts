@@ -6,12 +6,15 @@ type CreateDirFolderProps = {
     getErrFolderPath: fs.NoParamCallback
 }
 
-export function createDirFolder({CONVERTED_FILES_PATH, getErrFolderPath}: CreateDirFolderProps ){
 
-    fs.mkdir(CONVERTED_FILES_PATH, getErrFolderPath)
-
-    return {
-        CONVERTED_FILES_PATH,
-        getErrFolderPath
+ export class MakeDirFolder {
+    create({CONVERTED_FILES_PATH, getErrFolderPath}: CreateDirFolderProps ){
+    
+        fs.mkdir(CONVERTED_FILES_PATH, getErrFolderPath)
+        
+        return {
+            CONVERTED_FILES_PATH,
+            getErrFolderPath
+        }
     }
 }
